@@ -1,0 +1,42 @@
+{
+    "artificial intelligence": {
+        "answer": "Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn like humans. It includes machine learning, natural language processing, computer vision, and robotics.",
+        "confidence": 95
+    },
+    "machine learning": {
+        "answer": "Machine Learning (ML) is a subset of AI that enables systems to learn and improve from experience without being explicitly programmed. It uses algorithms to parse data, learn from it, and make predictions or decisions.",
+        "confidence": 95
+    },
+    "python programming": {
+        "answer": "Python is a high-level, interpreted programming language known for its simplicity and readability. It supports multiple programming paradigms and has a large standard library. It's widely used in web development, data science, AI, and automation.",
+        "confidence": 95
+    },
+    "cloud computing": {
+        "answer": "Cloud computing is the delivery of computing services over the internet, including servers, storage, databases, networking, software, analytics, and intelligence. It offers faster innovation, flexible resources, and economies of scale.",
+        "confidence": 90
+    },
+    "cybersecurity": {
+        "answer": "Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These attacks aim to access, change, or destroy sensitive information, extort money, or interrupt normal business processes.",
+        "confidence": 90
+    },
+    "blockchain": {
+        "answer": "Blockchain is a distributed ledger technology that records transactions across many computers securely. It's the technology behind cryptocurrencies like Bitcoin, but has many other applications in finance, supply chain, and more.",
+        "confidence": 85
+    },
+    "internet of things": {
+        "answer": "The Internet of Things (IoT) refers to the network of physical objects embedded with sensors, software, and other technologies to connect and exchange data with other devices and systems over the internet.",
+        "confidence": 85
+    },
+    "big data": {
+        "answer": "Big data refers to extremely large datasets that can be analyzed computationally to reveal patterns, trends, and associations. It's characterized by volume, velocity, and variety.",
+        "confidence": 85
+    },
+    "data science": {
+        "answer": "Data science combines statistics, programming, and domain knowledge to extract insights from data. It involves data collection, cleaning, analysis, visualization, and interpretation.",
+        "confidence": 90
+    },
+    "web development": {
+        "answer": "Web development involves building and maintaining websites. It includes front-end development (user interface), back-end development (server-side), and full-stack development (both).",
+        "confidence": 90
+    }
+}

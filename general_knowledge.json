@@ -1,0 +1,42 @@
+{
+    "who are you": {
+        "answer": "I'm an AI-powered FAQ chatbot designed to answer questions using a combination of local knowledge and web search capabilities. I can learn from interactions and web sources to improve my responses.",
+        "confidence": 100
+    },
+    "what can you do": {
+        "answer": "I can answer questions on various topics including technology, science, programming, history, and general knowledge. I use local knowledge, semantic search, and web APIs to find accurate information. I also learn from user interactions.",
+        "confidence": 100
+    },
+    "how are you": {
+        "answer": "I'm functioning optimally and ready to help you with your questions! How can I assist you today?",
+        "confidence": 100
+    },
+    "who created you": {
+        "answer": "I was created as an AI FAQ chatbot to help users find information quickly and accurately. I combine local knowledge with real-time web search capabilities.",
+        "confidence": 95
+    },
+    "what is your purpose": {
+        "answer": "My purpose is to provide accurate, helpful answers to your questions using advanced search techniques and a growing knowledge base. I aim to make information accessible and easy to understand.",
+        "confidence": 95
+    },
+    "hello": {
+        "answer": "Hello! I'm your AI FAQ assistant. Feel free to ask me anything about technology, science, programming, or general knowledge.",
+        "confidence": 100
+    },
+    "hi": {
+        "answer": "Hi there! I'm ready to answer your questions. What would you like to know?",
+        "confidence": 100
+    },
+    "thank you": {
+        "answer": "You're welcome! I'm glad I could help. Don't hesitate to ask if you have more questions.",
+        "confidence": 100
+    },
+    "goodbye": {
+        "answer": "Goodbye! Feel free to come back anytime you have questions. Have a great day!",
+        "confidence": 100
+    },
+    "help": {
+        "answer": "I can help you with questions about various topics. Try asking about technology, science, programming, or general knowledge.",
+        "confidence": 100
+    }
+}

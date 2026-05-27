@@ -1,0 +1,16 @@
+{
+    "welcome_message": "Welcome to AI FAQ Chatbot! I can answer questions using local knowledge and real-time web search.",
+    "default_topics": [
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Python Programming",
+        "Quantum Computing",
+        "Cybersecurity",
+        "Blockchain Technology",
+        "Data Science",
+        "Web Development"
+    ],
+    "web_search_enabled": true,
+    "cache_enabled": true,
+    "version": "1.0.0"
+}

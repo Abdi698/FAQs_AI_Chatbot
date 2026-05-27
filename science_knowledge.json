@@ -1,0 +1,42 @@
+{
+    "quantum computing": {
+        "answer": "Quantum computing uses quantum-mechanical phenomena like superposition and entanglement to perform computation. Quantum computers use quantum bits (qubits) that can represent both 0 and 1 simultaneously, potentially solving certain problems much faster than classical computers.",
+        "confidence": 85
+    },
+    "photosynthesis": {
+        "answer": "Photosynthesis is the process by which green plants, algae, and some bacteria convert light energy, usually from the sun, into chemical energy stored in glucose. The process uses carbon dioxide and water, releasing oxygen as a byproduct.",
+        "confidence": 90
+    },
+    "dna": {
+        "answer": "DNA (Deoxyribonucleic Acid) is the hereditary material in humans and almost all other organisms. It contains the genetic instructions for development, functioning, growth, and reproduction. DNA is organized into structures called chromosomes.",
+        "confidence": 95
+    },
+    "evolution": {
+        "answer": "Evolution is the process by which different kinds of living organisms develop and diversify from earlier forms over generations. It occurs through natural selection, genetic drift, mutation, and gene flow.",
+        "confidence": 90
+    },
+    "gravity": {
+        "answer": "Gravity is a fundamental force that attracts objects with mass toward each other. On Earth, gravity gives weight to physical objects and causes them to fall toward the ground when dropped.",
+        "confidence": 95
+    },
+    "periodic table": {
+        "answer": "The periodic table is a tabular arrangement of chemical elements organized by atomic number, electron configuration, and recurring chemical properties. It's divided into metals, metalloids, and nonmetals.",
+        "confidence": 90
+    },
+    "cells": {
+        "answer": "Cells are the basic structural and functional units of all living organisms. They can be prokaryotic (bacteria) or eukaryotic (plants, animals, fungi). Cells contain various organelles that perform specific functions.",
+        "confidence": 90
+    },
+    "climate change": {
+        "answer": "Climate change refers to long-term shifts in temperatures and weather patterns. While natural factors can cause climate change, human activities since the Industrial Revolution have been the main driver of recent changes.",
+        "confidence": 85
+    },
+    "solar system": {
+        "answer": "The solar system consists of the Sun and everything bound to it by gravity, including eight planets, dwarf planets, moons, asteroids, comets, and other small bodies. The four inner planets are terrestrial, while the four outer planets are gas giants.",
+        "confidence": 90
+    },
+    "electricity": {
+        "answer": "Electricity is the set of physical phenomena associated with the presence and motion of electric charge. It includes lightning, static electricity, electromagnetic induction, and the flow of electrons in conductors.",
+        "confidence": 85
+    }
+}

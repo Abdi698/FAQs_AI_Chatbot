@@ -1,0 +1,15 @@
+{
+    "search_enabled": true,
+    "cache_enabled": true,
+    "confidence_threshold": 40,
+    "max_history": 50,
+    "response_timeout": 10,
+    "auto_learn": true,
+    "suggestions_enabled": true,
+    "web_search_timeout": 8,
+    "max_cache_age_days": 30,
+    "enable_duckduckgo": true,
+    "enable_wikipedia": true,
+    "enable_dictionary": true,
+    "user_agent": "AIFAQChatbot/1.0"
+}

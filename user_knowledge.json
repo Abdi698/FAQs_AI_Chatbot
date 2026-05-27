@@ -1,0 +1,32 @@
+{
+  "hiv": {
+    "answer": "Wikipedia (HIV): Human immunodeficiency viruses (HIVs) are two species of Lentivirus (a subgroup of retrovirus) that infect humans. Over time, they cause acquired immunodeficiency syndrome (AIDS), a condition in which progressive failure of the immune system allows life-threatening opportunistic infections and cancers...",
+    "category": "general",
+    "confidence": 90,
+    "added_date": "2026-01-03T23:22:28.522791"
+  },
+  "human virus": {
+    "answer": "Wikipedia (Epstein–Barr virus): The Epstein–Barr virus (EBV), also known as human herpesvirus 4 (HHV-4), is one of the nine known human herpesvirus types in the herpes family, and is one of the most common viruses in humans. EBV is a double-stranded DNA virus. EBV is the first identified oncogenic virus, a virus that can cause cancer...",
+    "category": "general",
+    "confidence": 90,
+    "added_date": "2026-01-04T01:37:24.537719"
+  },
+  "biology": {
+    "answer": "Wikipedia (Biology): Biology is the scientific study of life and living organisms. It is a broad natural science that encompasses a wide range of fields and unifying principles that explain the structure, function, growth, origin, evolution, and distribution of life. Central to biology are five fundamental themes: the cell...",
+    "category": "science",
+    "confidence": 90,
+    "added_date": "2026-01-04T14:56:21.647963"
+  },
+  "human populations": {
+    "answer": "Wikipedia (Human population projections): Human population projections are attempts to extrapolate how human populations will change in the future. These projections are an important input to forecasts of the population's impact on this planet and humanity's future well-being. Models of population growth take trends in human development and...",
+    "category": "general",
+    "confidence": 90,
+    "added_date": "2026-01-05T18:52:39.656296"
+  },
+  "ai": {
+    "answer": "Wikipedia (Artificial intelligence): Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is a field of research in engineering, mathematics and computer science that develops...",
+    "category": "technology",
+    "confidence": 90,
+    "added_date": "2026-05-28T00:47:56.671562"
+  }
+}

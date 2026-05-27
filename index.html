@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🤖 AI FAQ Chatbot - Complete Web Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4f46e5;
+        --primary-dark: #4338ca;
+        --secondary: #7c3aed;
+        --accent: #ec4899;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --light: #f8fafc;
+        --dark: #1e293b;
+        --gray: #64748b;
+        --border: #e2e8f0;
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+        color: var(--dark);
+      }
+
+      .app-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 20px;
+        height: calc(100vh - 40px);
+      }
+
+      .chat-main {
+        display: flex;
+        flex-direction: column;
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        padding: 25px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200px;
+        height: 200px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+      }
+
+      .header-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .header-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .bot-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .bot-avatar {
+        width: 70px;
+        height: 70px;
+        background: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        color: var(--primary);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .bot-name h1 {
+        font-size: 1.8em;
+        margin-bottom: 5px;
+      }
+
+      .bot-name p {
+        opacity: 0.9;
+        font-size: 0.95em;
+      }
+
+      .status-badge {
+        padding: 8px 15px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .status-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+      .header-description {
+        margin-top: 15px;
+        font-size: 0.95em;
+        opacity: 0.9;
+        line-height: 1.5;
+      }
+
+      .chat-container {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+        background: var(--light);
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .message {
+        max-width: 80%;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .user-message {
+        align-self: flex-end;
+      }
+
+      .bot-message {
+        align-self: flex-start;
+      }
+
+      .message-bubble {
+        padding: 15px 20px;
+        border-radius: 18px;
+        position: relative;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        word-wrap: break-word;
+      }
+
+      .user-message .message-bubble {
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--primary-dark) 100%
+        );
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+
+      .bot-message .message-bubble {
+        background: white;
+        color: var(--dark);
+        border: 1px solid var(--border);
+        border-bottom-left-radius: 5px;
+      }
+
+      .message-content {
+        line-height: 1.6;
+        font-size: 15px;
+      }
+
+      .message-content strong {
+        color: var(--primary);
+      }
+
+      .message-meta {
+        margin-top: 10px;
+        font-size: 0.8em;
+        opacity: 0.7;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .message-tags {
+        display: flex;
+        gap: 8px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        padding: 4px 12px;
+        border-radius: 15px;
+        font-size: 0.75em;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        text-transform: uppercase;
+      }
+
+      .tag.local {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .tag.web {
+        background: #f0f9ff;
+        color: #0369a1;
+      }
+      .tag.learned {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .tag.cached {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .tag.fallback {
+        background: #f3f4f6;
+        color: #4b5563;
+      }
+
+      .input-area {
+        padding: 20px 25px;
+        border-top: 1px solid var(--border);
+        background: white;
+      }
+
+      .input-wrapper {
+        display: flex;
+        gap: 10px;
+      }
+
+      input[type="text"] {
+        flex: 1;
+        padding: 15px 20px;
+        border: 2px solid var(--border);
+        border-radius: 50px;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s;
+        background: var(--light);
+      }
+
+      input[type="text"]:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        background: white;
+      }
+
+      .send-btn {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(
+          135deg,
+          var(--primary) 0%,
+          var(--secondary) 100%
+        );
+        color: white;
+        border: none;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .send-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 20px rgba(79, 70, 229, 0.3);
+      }
+
+      .suggestions {
+        padding: 15px 25px;
+        background: linear-gradient(to right, #f8fafc, #f1f5f9);
+        border-top: 1px solid var(--border);
+      }
+
+      .suggestions h4 {
+        margin-bottom: 12px;
+        color: var(--dark);
+        font-size: 0.9em;
+        opacity: 0.8;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .suggestion-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .suggestion-btn {
+        padding: 10px 18px;
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 25px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 500;
+      }
+
+      .suggestion-btn:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        transform: translateY(-2px);
+      }
+
+      /* Sidebar Cards */
+      .sidebar-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 15px;
+      }
+
+      .card-header h3 {
+        font-size: 1.1em;
+        color: var(--dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: 15px;
+        background: var(--light);
+        border-radius: 10px;
+        border: 1px solid var(--border);
+      }
+
+      .stat-value {
+        font-size: 1.8em;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .stat-label {
+        font-size: 0.85em;
+        color: var(--gray);
+      }
+
+      .features-list {
+        list-style: none;
+      }
+
+      .features-list li {
+        padding: 8px 0;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.9em;
+      }
+
+      .features-list li:last-child {
+        border-bottom: none;
+      }
+
+      .feature-icon {
+        color: var(--success);
+        font-size: 0.9em;
+      }
+
+      /* Typing Indicator */
+      .typing-indicator {
+        display: none;
+        padding: 15px 20px;
+        background: white;
+        border-radius: 18px;
+        width: fit-content;
+        margin-bottom: 15px;
+        border: 1px solid var(--border);
+        align-self: flex-start;
+      }
+
+      .typing-dots {
+        display: flex;
+        gap: 5px;
+      }
+
+      .typing-dots span {
+        width: 8px;
+        height: 8px;
+        background: var(--primary);
+        border-radius: 50%;
+        animation: bounce 1.4s infinite;
+      }
+
+      .typing-dots span:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+      .typing-dots span:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+
+      @keyframes bounce {
+        0%,
+        60%,
+        100% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-8px);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 1100px) {
+        .app-container {
+          grid-template-columns: 1fr;
+          height: auto;
+        }
+
+        .sidebar {
+          grid-template-columns: 1fr 1fr;
+          display: grid;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .app-container {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          grid-template-columns: 1fr;
+        }
+
+        .message {
+          max-width: 90%;
+        }
+
+        .header-top {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 15px;
+        }
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #a1a1a1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app-container">
+      <div class="chat-main">
+        <div class="header">
+          <div class="header-content">
+            <div class="header-top">
+              <div class="bot-info">
+                <div class="bot-avatar">
+                  <i class="fas fa-robot"></i>
+                </div>
+                <div class="bot-name">
+                  <h1>AI FAQ Chatbot</h1>
+                  <p>Complete Web Search & Self-Learning</p>
+                </div>
+              </div>
+              <div class="status-badge">
+                <span class="status-dot"></span>
+                <span id="statusText">Online</span>
+              </div>
+            </div>
+            <div class="header-description">
+              <p>
+                I combine local knowledge with real-time web search from
+                DuckDuckGo, Wikipedia, and other APIs to provide accurate
+                answers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-container" id="chatContainer">
+          <div class="message bot-message">
+            <div class="message-bubble">
+              <div class="message-content">
+                <strong>🤖 Welcome to AI FAQ Chatbot!</strong>
+                <br /><br />
+                I can help you with:
+                <br />
+                • <strong>Technology</strong> (AI, Programming, Cybersecurity)
+                <br />
+                • <strong>Science</strong> (Physics, Chemistry, Biology)
+                <br />
+                • <strong>General Knowledge</strong> <br /><br />
+                <em
+                  >I use real web search when needed and learn from
+                  interactions!</em
+                >
+              </div>
+              <div class="message-meta">
+                <span>System</span>
+                <span>Just now</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suggestions">
+          <h4><i class="fas fa-lightbulb"></i> Try these questions:</h4>
+          <div class="suggestion-buttons">
+            <button
+              class="suggestion-btn"
+              onclick="askQuestion('What is artificial intelligence?')"
+            >
+              <i class="fas fa-brain"></i> What is AI?
+            </button>
+            <button
+              class="suggestion-btn"
+              onclick="askQuestion('Explain quantum computing')"
+            >
+              <i class="fas fa-atom"></i> Quantum Computing
+            </button>
+            <button
+              class="suggestion-btn"
+              onclick="askQuestion('How does photosynthesis work?')"
+            >
+              <i class="fas fa-leaf"></i> Photosynthesis
+            </button>
+            <button
+              class="suggestion-btn"
+              onclick="askQuestion('What is blockchain technology?')"
+            >
+              <i class="fas fa-link"></i> Blockchain
+            </button>
+          </div>
+        </div>
+
+        <div class="input-area">
+          <div class="input-wrapper">
+            <input
+              type="text"
+              id="userInput"
+              placeholder="Ask me anything (I'll search the web if needed)..."
+              onkeypress="if(event.key === 'Enter') sendMessage()"
+            />
+            <button class="send-btn" onclick="sendMessage()">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <div class="sidebar-card">
+          <div class="card-header">
+            <h3><i class="fas fa-chart-line"></i> Statistics</h3>
+            <button
+              onclick="refreshStats(this)"
+              style="
+                background: none;
+                border: none;
+                color: var(--primary);
+                cursor: pointer;
+              "
+            >
+              <i class="fas fa-sync-alt"></i>
+            </button>
+          </div>
+          <div class="stats-grid" id="statsGrid">
+            <div class="stat-item">
+              <div class="stat-value" id="knowledgeCount">0</div>
+              <div class="stat-label">Knowledge Base</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="cacheCount">0</div>
+              <div class="stat-label">Cached Answers</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="apiCount">0</div>
+              <div class="stat-label">Web APIs</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-value" id="responseTime">-</div>
+              <div class="stat-label">Avg Response</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sidebar-card">
+          <div class="card-header">
+            <h3><i class="fas fa-bolt"></i> Features</h3>
+          </div>
+          <ul class="features-list">
+            <li><i class="fas fa-check feature-icon"></i> DuckDuckGo Search</li>
+            <li><i class="fas fa-check feature-icon"></i> Wikipedia API</li>
+            <li><i class="fas fa-check feature-icon"></i> Dictionary Lookup</li>
+            <li>
+              <i class="fas fa-check feature-icon"></i> Intelligent Caching
+            </li>
+            <li><i class="fas fa-check feature-icon"></i> Self-Learning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="typing-indicator" id="typingIndicator">
+      <div class="typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <script>
+      let responseTimes = [];
+
+      // Load stats on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        loadStats();
+
+        // Add welcome message
+        setTimeout(() => {
+          addMessage(
+            "Try asking me anything! If I don't know the answer locally, I'll search the web in real-time.",
+            "bot"
+          );
+        }, 1000);
+      });
+
+      function askQuestion(question) {
+        document.getElementById("userInput").value = question;
+        sendMessage();
+      }
+
+      async function sendMessage() {
+        const input = document.getElementById("userInput");
+        const message = input.value.trim();
+
+        if (!message) {
+          alert("Please enter a question");
+          return;
+        }
+
+        // Add user message
+        addMessage(message, "user");
+        input.value = "";
+        input.focus();
+
+        // Show typing indicator
+        showTyping();
+
+        try {
+          const startTime = Date.now();
+
+          const response = await fetch("/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message: message }),
+          });
+
+          const data = await response.json();
+
+          // Calculate response time
+          const responseTime = (Date.now() - startTime) / 1000;
+          responseTimes.push(responseTime);
+
+          // Update average response time
+          updateResponseTime();
+
+          // Hide typing indicator
+          hideTyping();
+
+          if (data.status === "error") {
+            addMessage(`❌ Error: ${data.error}`, "bot");
+            return;
+          }
+
+          // Prepare tags
+          let tags = [];
+
+          if (data.source === "Local Knowledge") {
+            tags.push({ text: "LOCAL KNOWLEDGE", class: "local" });
+          } else if (
+            data.source.includes("DuckDuckGo") ||
+            data.source.includes("Wikipedia") ||
+            data.source.includes("Dictionary")
+          ) {
+            tags.push({ text: "WEB SEARCH", class: "web" });
+            if (data.cached) {
+              tags.push({ text: "CACHED", class: "cached" });
+            }
+          } else if (data.source === "AI Generated") {
+            tags.push({ text: "GENERATED", class: "fallback" });
+          }
+
+          if (data.learned) {
+            tags.push({ text: "NEWLY LEARNED", class: "learned" });
+          }
+
+          // Add bot response
+          addMessage(data.answer, "bot", {
+            source: data.source,
+            confidence: data.confidence,
+            time: data.response_time,
+            tags: tags,
+            method: data.method,
+          });
+
+          // Update stats if learned something
+          if (data.learned) {
+            setTimeout(loadStats, 500);
+          }
+
+          // Show suggestions if available
+          if (data.suggestions && data.suggestions.length > 0) {
+            setTimeout(() => {
+              showFollowUpSuggestions(data.suggestions);
+            }, 100);
+          }
+        } catch (error) {
+          hideTyping();
+          addMessage("⚠️ Network error. Please check your connection.", "bot");
+          console.error("Error:", error);
+        }
+      }
+
+      function addMessage(content, sender, metadata = {}) {
+        const container = document.getElementById("chatContainer");
+
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${sender}-message`;
+
+        let tagsHtml = "";
+        if (metadata.tags && metadata.tags.length > 0) {
+          tagsHtml = '<div class="message-tags">';
+          metadata.tags.forEach((tag) => {
+            tagsHtml += `<span class="tag ${tag.class}">${tag.text}</span>`;
+          });
+          tagsHtml += "</div>";
+        }
+
+        let metaInfo = `<span>${
+          sender === "user" ? "You" : "AI Assistant"
+        }</span>`;
+        if (metadata.source) {
+          metaInfo += ` | ${metadata.source}`;
+          if (metadata.confidence > 0) {
+            metaInfo += ` | ${metadata.confidence}% confidence`;
+          }
+        }
+        metaInfo += `<span>${
+          metadata.time ? metadata.time + "s" : "Just now"
+        }</span>`;
+
+        messageDiv.innerHTML = `
+                <div class="message-bubble">
+                    <div class="message-content">
+                        ${content}
+                    </div>
+                    ${tagsHtml}
+                    <div class="message-meta">
+                        ${metaInfo}
+                    </div>
+                </div>
+            `;
+
+        // Remove typing indicator if present
+        const typingIndicator = document.getElementById("typingIndicator");
+        if (typingIndicator && typingIndicator.parentNode === container) {
+          container.removeChild(typingIndicator);
+        }
+
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
+
+        return messageDiv;
+      }
+
+      function showTyping() {
+        const container = document.getElementById("chatContainer");
+        const typingDiv = document.getElementById("typingIndicator");
+
+        typingDiv.style.display = "block";
+        container.appendChild(typingDiv);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      function hideTyping() {
+        const typingDiv = document.getElementById("typingIndicator");
+        typingDiv.style.display = "none";
+      }
+
+      async function loadStats() {
+        try {
+          const response = await fetch("/stats");
+          const data = await response.json();
+
+          if (data.stats) {
+            document.getElementById("knowledgeCount").textContent =
+              data.stats.knowledge_base_entries;
+            document.getElementById("cacheCount").textContent =
+              data.stats.cached_answers || 0;
+            document.getElementById("apiCount").textContent =
+              data.stats.web_apis || 3;
+
+            // Update status
+            document.getElementById("statusText").textContent = data.stats
+              .search_enabled
+              ? "Online & Searching"
+              : "Online (Local Only)";
+          }
+        } catch (error) {
+          console.error("Error loading stats:", error);
+        }
+      }
+
+      function refreshStats(buttonElem) {
+        loadStats();
+
+        // Show refresh feedback
+        const refreshBtn =
+          buttonElem || document.querySelector(".card-header button");
+        if (!refreshBtn) return;
+
+        refreshBtn.innerHTML = '<i class="fas fa-check"></i>';
+        refreshBtn.style.color = "var(--success)";
+
+        setTimeout(() => {
+          refreshBtn.innerHTML = '<i class="fas fa-sync-alt"></i>';
+          refreshBtn.style.color = "var(--primary)";
+        }, 1000);
+      }
+
+      function updateResponseTime() {
+        if (responseTimes.length > 0) {
+          const avgTime = (
+            responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length
+          ).toFixed(2);
+          document.getElementById("responseTime").textContent = avgTime + "s";
+        }
+      }
+
+      function showFollowUpSuggestions(suggestions) {
+        const container = document.getElementById("chatContainer");
+
+        const suggestionsDiv = document.createElement("div");
+        suggestionsDiv.className = "message bot-message";
+        suggestionsDiv.style.opacity = "0.9";
+
+        let suggestionsHtml = "<strong>💡 Related questions:</strong><br><br>";
+        suggestions.forEach((suggestion, index) => {
+          suggestionsHtml += `<button onclick="askQuestion('${suggestion.replace(
+            /'/g,
+            "\\'"
+          )}')" 
+                    style="margin: 5px; padding: 8px 12px; background: var(--light); border: 1px solid var(--border); 
+                    border-radius: 15px; cursor: pointer; font-size: 14px;">${suggestion}</button>`;
+        });
+
+        suggestionsDiv.innerHTML = `
+                <div class="message-bubble">
+                    <div class="message-content">
+                        ${suggestionsHtml}
+                    </div>
+                </div>
+            `;
+
+        container.appendChild(suggestionsDiv);
+        container.scrollTop = container.scrollHeight;
+      }
+
+      // Auto-focus input
+      document.getElementById("userInput").focus();
+    </script>
+  </body>
+</html>
